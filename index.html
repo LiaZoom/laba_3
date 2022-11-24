@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        /* ячейки стили  */
+        td, button, input{
+            border-style: solid;
+            border-color: #55E8DF;
+            border-width: 2px;
+            background-color: rgb(223, 232, 239);
+            border-radius: 2px;
+            padding: 10px;
+        }
+
+
+    </style>
+
+</head>
+
+<body>
+
+    
+    <input type="hidden" id="rowCount" value="0" /> <!--переменная для подсчета всех создаваемых строк-->
+
+    <button onclick="createTable()" id="btnCreateTable">Создать таблицу</button> <!--при нажатии на кнопку вызывается определенный метод-->
+    <button onclick="addRow()" id="btnAddRow" disabled>Добавить строку</button> <!-- disabled блокирует нажатие кнопки до момента создания таблицы-->
+    <button onclick="removeRow()" id="btnRemoveRow" disabled>Удалить строку №</button>
+    <input type="number" id="rowToDeleteNumber" min="1" required disabled /> <!-- пустое окно для ввода номера строки для удаления-->
+ 
+    <div id="container"></div> <!--пустой контейнер, в который будет добавляться таблица-->
+    <script>
+        function createTable() {
+            const table = document.createElement("table"); // переменная для создания таблицы
+            table.setAttribute("id", "mytable", "name"); // у таблицы будут 3 атрибута: id, значение, значение
+            document.getElementById("container").appendChild(table); // добавляем таблицу в существующий контейнер
+ 
+            document.getElementById("btnCreateTable").disabled = true; // выключаем возможность нажатия кнопки создания таблицы (т.к. уже создали)
+            document.getElementById("btnAddRow").disabled = false; // а остальных включаем
+            document.getElementById("btnRemoveRow").disabled = false;
+            document.getElementById("rowToDeleteNumber").disabled = false;
+        }
+ 
+        function addRowCount() { // функция, которая вызывается при создании новой строки и увеличивает значение количества строк на 1 (чтобы новая строка была со следующим номером)
+            const rowCountInput = document.getElementById("rowCount");  // получили текущее кол-во строк
+            const newRowCount = parseInt(rowCountInput.value) + 1;  // увеличили на 1
+            rowCountInput.value = newRowCount;
+            return newRowCount;
+        }
+ 
+        function addRow() {  // функция, добавляющая строки таблицы
+ 
+            const table = document.getElementById("mytable"); 
+            const rowNum = addRowCount(); // номер создаваемой строки становится на 1 больше предыдущей
+            const row = document.createElement("tr");  // создали новую строку
+            row.setAttribute("id", "num-" + rowNum);   // присвоили новое значение атрибуту (1 2 3 ...)
+
+            if (rowNum % 2==0)  // определяем значения второго столбца
+            { alert (row.setAttribute("mytable", "чётное"));
+        }
+            else {
+            alert ( row.setAttribute("mytable", "нечётное" )); }
+
+        
+ 
+            const tdNum = document.createElement("td");  // ячейки таблицы создали 
+            tdNum.innerText = rowNum; // вставмли тексь в них
+ 
+            const tdVal = document.createElement("td");
+            tdVal.innerText = row.getAttribute("mytable");
+
+            const tdName = document.createElement("td");
+            tdName.innerText = "Здессь могло быть ваше имя";
+ 
+            row.appendChild(tdNum); // вставляем в строку ячейки одну за другой
+            row.appendChild(tdVal);
+            row.appendChild(tdName);
+
+ 
+            table.appendChild(row); // вставляем в таблицу строки
+        }
+    
+ 
+        function removeRow() {  //функция, удаляющая строки таблицы
+            const numberToRemove = document.getElementById("rowToDeleteNumber").value   ;
+            document.getElementById("num-" + numberToRemove).remove();
+        }
+    </script>
+</body>
+</html>
